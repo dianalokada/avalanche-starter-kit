@@ -1,8 +1,4 @@
-// (c) 2023, Ava Labs, Inc. All rights reserved.
-// See the file LICENSE for licensing terms.
-
 // SPDX-License-Identifier: Ecosystem
-
 pragma solidity ^0.8.18;
 
 import "@teleporter/ITeleporterMessenger.sol";
@@ -17,12 +13,20 @@ contract ReceiverOnSubnet is ITeleporterReceiver {
         // Only the Teleporter receiver can deliver a message.
         require(msg.sender == address(messenger), "ReceiverOnSubnet: unauthorized TeleporterMessenger");
 
-        // Send Roundtrip message back to sender
-        string memory response = string.concat(abi.decode(message, (string)), " World!");
+        // Decode the incoming message
+        (string memory userMessage, bytes memory blsSignature, bytes memory blsPublicKey) = abi.decode(message, (string, bytes, bytes));
 
+        // Mock verification (always returns true)
+        bool verificationResult = mockVerifySignature(userMessage, blsSignature, blsPublicKey);
+
+        // Prepare the response message
+        string memory response = verificationResult 
+            ? "Signature verification successful" 
+            : "Signature verification failed";
+
+        // Send the verification result back to the C-chain
         messenger.sendCrossChainMessage(
             TeleporterMessageInput({
-                // Blockchain ID of C-Chain
                 destinationBlockchainID: sourceBlockchainID,
                 destinationAddress: originSenderAddress,
                 feeInfo: TeleporterFeeInfo({feeTokenAddress: address(0), amount: 0}),
@@ -31,5 +35,14 @@ contract ReceiverOnSubnet is ITeleporterReceiver {
                 message: abi.encode(response)
             })
         );
+    }
+
+    function mockVerifySignature(string memory _message, bytes memory _signature, bytes memory _publicKey) 
+        internal 
+        pure 
+        returns (bool) 
+    {
+        // Mock verification: always return true
+        return true;
     }
 }
