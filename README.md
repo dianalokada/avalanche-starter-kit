@@ -2,7 +2,8 @@
 
 This repository contains the implementation of Task 1 for creating a Cross-Chain dApp with mock verification using the Avalanche platform. The goal of this task is to set up a local Avalanche network, deploy a Subnet, and create a dApp on the local C-Chain that sends messages to the Subnet. The Subnet will mock the verification of BLS signatures and send back the result to the C-Chain.
 
-**Goal**:
+## Goal
+
 Deploy a Subnet to a local network. The dApp on the local C-Chain needs to send a message containing some message, a BLS signature, and a BLS public key to your Subnet. The Subnet needs to verify the signature and send a message back to the C-Chain informing the result of the verification. For this task, the signature verification will be mocked to always return true.
 
 This starter kit will get you started with developing solidity smart contract dApps on the C-Chain or on an Avalanche Subnet. It provides all tools to build cross-Subnet dApps using Teleporter. It includes:
@@ -29,7 +30,7 @@ Alternatively, you can run them locally. You need [docker](https://www.docker.co
 
 ## Starting a local Avalanche Network
 
-To start a local Avalanche network with your own teleporter-enabled Subnet inside the container follow these commands. Your Avalanche network will be completely independent of the Avalanche Mainnet and Fuji Testnet. It will have its own Primary Network (C-Chain, X-Chain & P-Chain). You will not have access to services available on Fuji (such as Chainlink services or bridges). If you require these, go to the [Fuji Testnet](#fuji-testnet) section.
+To start a local Avalanche network with your own teleporter-enabled Subnet inside the container follow these commands. 
 
 First let's create out Subnet configuration. Follow the dialog and if you don't have special requirements for precompiles just follow the suggested options. For the Airdrop of the native token select "Airdrop 1 million tokens to the default ewoq address (do not use in production)". Keep the name "mysubnet" to avoid additional configuration.
 
@@ -54,7 +55,7 @@ anothersubnet = "http://localhost:9650/ext/bc/BASE58_BLOCKCHAIN_ID/rpc"
 
 ### Setting the Blockchain ID in the Contracts
 
-### Find the blockchainID of your Subnet with this command:
+Find the blockchainID of your Subnet with this command:
 
 ```bash
 avalanche subnet describe mysubnet
@@ -94,6 +95,7 @@ forge create --rpc-url mysubnet --private-key $PK src/1-send-roundtrip/receiverO
 
 ### Sending a Message
 
+Use `cast send` to send a message from the C-Chain to the Subnet.
 You can find `<sender_contract_address>` in the output of the first and the `<receiver_contract_address>` of the second `forge create` command in the line saying `Deployed to:`.
 
 ```bash
@@ -101,6 +103,8 @@ cast send <sender_contract_address> "sendMessageWithSignature(address,string,byt
 ```
 
 ### Verifying Message Receipt
+
+Use `cast call` to receive verification result on the C-Chain.
 
 ```bash
 cast call <sender_contract_address> "verificationResult()(string)" --rpc-url local-c
