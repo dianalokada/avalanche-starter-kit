@@ -15,7 +15,7 @@ contract SenderOnCChain is ITeleporterReceiver {
     // Event to log the verification result
     event VerificationReceived(string result);
 
-     //Sends a message with BLS signature and public key to the Subnet.
+    //Sends a message with BLS signature and public key to the Subnet.
     // This function sends a message with a BLS signature and public key to a subnet
     function sendMessageWithSignature(
         address destinationAddress,
@@ -23,11 +23,11 @@ contract SenderOnCChain is ITeleporterReceiver {
         bytes memory blsSignature,
         bytes memory blsPublicKey
     ) external {
-    // This calls the sendCrossChainMessage function of the receiverOnSubnet contract
+        // This calls the sendCrossChainMessage function of the receiverOnSubnet contract
         messenger.sendCrossChainMessage(
             TeleporterMessageInput({
                 // Replace with blockchainID of your Subnet (see instructions in Readme)
-                destinationBlockchainID: 0x44a386d494799a062806eacf8493c71b4f99d5f40e94639cbeeac2b6314baec3,
+                destinationBlockchainID: 0x38c1762345634168bdc821af5df172d9c0e7b7c9ffcf06d63a1367602ab94e12,
                 destinationAddress: destinationAddress,
                 feeInfo: TeleporterFeeInfo({feeTokenAddress: address(0), amount: 0}),
                 requiredGasLimit: 100000,

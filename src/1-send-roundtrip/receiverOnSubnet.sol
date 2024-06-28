@@ -14,15 +14,15 @@ contract ReceiverOnSubnet is ITeleporterReceiver {
         require(msg.sender == address(messenger), "ReceiverOnSubnet: unauthorized TeleporterMessenger");
 
         // Decode the incoming message
-        (string memory userMessage, bytes memory blsSignature, bytes memory blsPublicKey) = abi.decode(message, (string, bytes, bytes));
+        (string memory userMessage, bytes memory blsSignature, bytes memory blsPublicKey) =
+            abi.decode(message, (string, bytes, bytes));
 
         // Mock verification (always returns true)
         bool verificationResult = mockVerifySignature(userMessage, blsSignature, blsPublicKey);
 
         // Prepare the response message
-        string memory response = verificationResult 
-            ? "Signature verification successful" 
-            : "Signature verification failed";
+        string memory response =
+            verificationResult ? "Signature verification successful" : "Signature verification failed";
 
         // Send the verification result back to the C-chain
         messenger.sendCrossChainMessage(
@@ -37,10 +37,10 @@ contract ReceiverOnSubnet is ITeleporterReceiver {
         );
     }
 
-    function mockVerifySignature(string memory _message, bytes memory _signature, bytes memory _publicKey) 
-        internal 
-        pure 
-        returns (bool) 
+    function mockVerifySignature(string memory _message, bytes memory _signature, bytes memory _publicKey)
+        internal
+        pure
+        returns (bool)
     {
         // Mock verification: always return true
         return true;
