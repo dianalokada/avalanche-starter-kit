@@ -55,5 +55,5 @@ cast send <sender_contract_address> "sendMessageWithSignature(address,string,byt
 ### Verifying Message Receipt
 
 ```bash
-cast call --rpc-url local-c <sender_contract_address> "sendMessageWithSignature()(address,string,bytes,bytes)"
+cast call <sender_contract_address> "verificationResult()(string)" --rpc-url local-c
 ```
