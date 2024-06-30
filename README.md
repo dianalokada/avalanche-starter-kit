@@ -1,12 +1,16 @@
 # Cross-Chain dApp with Mock Verification
 
-This repository contains the implementation of Task 1 for creating a Cross-Chain dApp with mock verification using the Avalanche platform. The goal of this task is to set up a local Avalanche network, deploy a Subnet, and create a dApp on the local C-Chain that sends messages to the Subnet. The Subnet will mock the verification of BLS signatures and send back the result to the C-Chain.
+This repository contains the implementation of creating a Cross-Chain dApp with verification using the Avalanche platform. We will set up a local Avalanche network, deploy a Subnet, and create a dApp on the local C-Chain that sends messages to the Subnet. The Subnet will verify the BLS signatures and send back the result to the C-Chain.
+
+## Learn about Cross-Subnet dApps with Teleporter
+
+To get a better understanding of Cross-Subnet dApps architecture, take the Avalanche Academy course on [Cross-Subnet dApps with Teleporter](https://academy.avax.network/course/teleporter).
 
 ## Goal
 
-Deploy a Subnet to a local network. The dApp on the local C-Chain needs to send a message containing some message, a BLS signature, and a BLS public key to your Subnet. The Subnet needs to verify the signature and send a message back to the C-Chain informing the result of the verification. For this task, the signature verification will be mocked to always return true.
+Deploy a Subnet to a local network. The dApp on the local C-Chain needs to send a message containing some message, a BLS signature, and a BLS public key to your Subnet. The Subnet needs to verify the signature and send a message back to the C-Chain informing the result of the verification. 
 
-This starter kit will get you started with developing solidity smart contract dApps on the C-Chain or on an Avalanche Subnet. It provides all tools to build cross-Subnet dApps using Teleporter. It includes:
+This starter kit will get you started with developing solidity smart contract dApps on the C-Chain and on an Avalanche Subnet. It includes:
 
 - **Avalanche CLI**: Run a local Avalanche Network
 - **Foundry**:
@@ -14,7 +18,6 @@ This starter kit will get you started with developing solidity smart contract dA
   - Cast: Interact with these smart contracts
 - **Teleporter**: All contracts you may want to interact with Teleporter
 - **AWM Relayer**: The binary to run your own relayer
-- **Examples**: Contracts showcasing how to achieve common patterns, such as sending simple messages, call functions of a contract on another blockchain and bridging assets. Please note that these example contracts have not been audited and are for educational purposes only
 
 ## Set Up
 
@@ -26,7 +29,19 @@ You can run them directly on Github by clicking **Code**, switching to the **Cod
 
 ### Run Dev Container locally with Docker
 
-Alternatively, you can run them locally. You need [docker](https://www.docker.com/products/docker-desktop/) installed and [VS Code](https://code.visualstudio.com/) with the extensions [Dev Container extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers). Then clone the repository and open it in VS Code. VS Code will ask you if you want to reopen the project in a container.
+Alternatively, you can run them locally. You need docker installed and VS Code with the extensions Dev Container extension. Then clone the repository and open it in VS Code. VS Code will ask you if you want to reopen the project in a container.
+
+If you are running on Apple Silicon you may run into issues while opening and running your dev container in VSCode. The issue resides in Foundry platform targeting. The fix is currently in draft: foundry-rs/foundry#7512
+
+To workaround, please edit the file Dockerfile to include --platform linux/amd64 before pulling Foundry.
+
+```bash
+# .devcontainer/Dockerfile
+FROM avaplatform/avalanche-cli:latest as avalanche-cli
+FROM avaplatform/awm-relayer:latest as awm-relayer
+FROM --platform=linux/amd64 ghcr.io/foundry-rs/foundry:latest as foundry
+...
+```
 
 ## Starting a local Avalanche Network
 
@@ -34,7 +49,7 @@ To start a local Avalanche network with your own teleporter-enabled Subnet insid
 
 First let's create out Subnet configuration. Follow the dialog and if you don't have special requirements for precompiles just follow the suggested options. For the Airdrop of the native token select "Airdrop 1 million tokens to the default ewoq address (do not use in production)". Keep the name "mysubnet" to avoid additional configuration.
 
-```
+```bash
 avalanche subnet create mysubnet
 ```
 
