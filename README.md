@@ -58,7 +58,12 @@ FROM --platform=linux/amd64 ghcr.io/foundry-rs/foundry:latest as foundry
 
 To start a local Avalanche network with your own teleporter-enabled Subnet inside the container follow these commands. 
 
+```bash
+avalanche subnet create mysubnet
+```
+
 First let's create out Subnet configuration. Follow the dialog and if you don't have special requirements for precompiles just follow the suggested options. For the Airdrop of the native token select "Airdrop 1 million tokens to the default ewoq address (do not use in production)". Keep the name "mysubnet" to avoid additional configuration.
+
 ```bash
 ? Choose your VM:
 ✔ Subnet-EVM
@@ -85,9 +90,6 @@ prefunding address 0x8db97C7cEcE249c2b98bDC0226Cc4C2A57BF52FC with balance 10000
 ✓ Successfully created subnet configuration
 ```
 
-```bash
-avalanche subnet create mysubnet
-```
 
 Now let's spin up the local Avalanche network and deploy our Subnet. This will also deploy the Teleporter messenger and the registry on our Subnet and the C-Chain.
 
