@@ -1,6 +1,6 @@
 # Cross-Chain BLS Signature Verification dApp (Part 1)
 
-## Part 1: Create a Cross-Chain dApp with Verification
+### Part 1: Create a Cross-Chain dApp with Verification
 
 This repository contains the implementation of creating a Cross-Chain BLS Signature Verification dApp using the Avalanche platform. We will set up a local Avalanche network, deploy a Subnet, and create a dApp on the local C-Chain that sends messages to the Subnet. The Subnet will verify the BLS signatures and send back the result to the C-Chain.
 
@@ -8,12 +8,16 @@ This repository contains the implementation of creating a Cross-Chain BLS Signat
 
 Deploy a Subnet to a local network. The dApp on the local C-Chain needs to send a message containing some message, a BLS signature, and a BLS public key to your Subnet. The Subnet needs to verify the signature and send a message back to the C-Chain informing the result of the verification. 
 
-### Part 2 of this assesment is located here: [Creating a Signature Verification Precompile Contract](https://github.com/dianalokada/my-precompile-evm).
+Part 2 of this assessment is located here: [Creating a Signature Verification Precompile Contract](https://github.com/dianalokada/my-precompile-evm).
 
 
 ## Learn about Cross-Subnet dApps with Teleporter
 
 To get a better understanding of Cross-Subnet dApps architecture, take the Avalanche Academy course on [Cross-Subnet dApps with Teleporter](https://academy.avax.network/course/teleporter).
+
+### Local Network
+
+For convenience the private key 56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027 of the default airdrop address is stored in the environment variable $PK. Furthermore, the RPC-url for the C-Chain of your local network is set in the foundry.toml file.
 
 ## Environment Setup
 
@@ -36,6 +40,8 @@ You can run them directly on Github by clicking **Code**, switching to the **Cod
 
 Alternatively, you can run them locally. You need docker installed and VS Code with the extensions Dev Container extension. Then clone the repository and open it in VS Code. VS Code will ask you if you want to reopen the project in a container.
 
+To make sure that all the submodules are cloned please use `git clone --recurse-submodules` instead of `git clone`
+
 If you are running on Apple Silicon you may run into issues while opening and running your dev container in VSCode. The issue resides in Foundry platform targeting. The fix is currently in draft: foundry-rs/foundry#7512
 
 To workaround, please edit the file Dockerfile to include --platform linux/amd64 before pulling Foundry.
@@ -53,6 +59,31 @@ FROM --platform=linux/amd64 ghcr.io/foundry-rs/foundry:latest as foundry
 To start a local Avalanche network with your own teleporter-enabled Subnet inside the container follow these commands. 
 
 First let's create out Subnet configuration. Follow the dialog and if you don't have special requirements for precompiles just follow the suggested options. For the Airdrop of the native token select "Airdrop 1 million tokens to the default ewoq address (do not use in production)". Keep the name "mysubnet" to avoid additional configuration.
+```bash
+? Choose your VM:
+✔ Subnet-EVM
+? What version of Subnet-EVM would you like?:
+✔ Use latest release version
+? Would you like to enable Teleporter on your VM?:
+✔ Yes
+? Would you like to run AMW Relayer when deploying your VM?:
+✔ Yes
+Installing subnet-evm-v0.6.4...
+subnet-evm-v0.6.4 installation successful
+creating genesis for subnet mysubnet
+Enter your subnet's ChainId. It can be any positive integer.
+ChainId: 012345
+Select a symbol for your subnet's native token
+Token symbol: NATV
+? How would you like to set fees:
+✔ Low disk use    / Low Throughput    1.5 mil gas/s (C-Chain's setting)
+? How would you like to distribute funds:
+✔ Airdrop 1 million tokens to the default ewoq address (do not use in production)
+prefunding address 0x8db97C7cEcE249c2b98bDC0226Cc4C2A57BF52FC with balance 1000000000000000000000000
+? Advanced: Would you like to add a custom precompile to modify the EVM?:
+✔ No
+✓ Successfully created subnet configuration
+```
 
 ```bash
 avalanche subnet create mysubnet
@@ -62,6 +93,12 @@ Now let's spin up the local Avalanche network and deploy our Subnet. This will a
 
 ```bash
 avalanche subnet deploy mysubnet
+```
+
+```bash
+? Choose a network for the operation:
+✔ Local Network
+Deploying [mysubnet] to Local Network
 ```
 
 Make sure to add the RPC Url to the `foundry.toml` file if you have chosen a different name than `mysubnet`. If you've used `mysubnet` the rpc is already configured.

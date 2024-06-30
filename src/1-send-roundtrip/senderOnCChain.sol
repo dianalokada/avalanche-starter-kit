@@ -15,6 +15,7 @@ contract SenderOnCChain is ITeleporterReceiver {
     // Event to log the verification result
     event VerificationReceived(string result);
 
+    //Sends a message with BLS signature and public key to the Subnet.
     // This function sends a message with a BLS signature and public key to a subnet
     function sendMessageWithSignature(
         address destinationAddress,
