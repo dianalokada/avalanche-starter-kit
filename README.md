@@ -1,16 +1,21 @@
-# Cross-Chain BLS Signature Verification dApp
+# Cross-Chain BLS Signature Verification dApp (Part 1)
+
+## Part 1: Create a Cross-Chain dApp with Verification
 
 This repository contains the implementation of creating a Cross-Chain BLS Signature Verification dApp using the Avalanche platform. We will set up a local Avalanche network, deploy a Subnet, and create a dApp on the local C-Chain that sends messages to the Subnet. The Subnet will verify the BLS signatures and send back the result to the C-Chain.
-
-## Learn about Cross-Subnet dApps with Teleporter
-
-To get a better understanding of Cross-Subnet dApps architecture, take the Avalanche Academy course on [Cross-Subnet dApps with Teleporter](https://academy.avax.network/course/teleporter).
 
 ### Goal
 
 Deploy a Subnet to a local network. The dApp on the local C-Chain needs to send a message containing some message, a BLS signature, and a BLS public key to your Subnet. The Subnet needs to verify the signature and send a message back to the C-Chain informing the result of the verification. 
 
-## Set Up
+### Part 2 of this assesment is located here: [Creating a Signature Verification Precompile Contract](https://github.com/dianalokada/my-precompile-evm).
+
+
+## Learn about Cross-Subnet dApps with Teleporter
+
+To get a better understanding of Cross-Subnet dApps architecture, take the Avalanche Academy course on [Cross-Subnet dApps with Teleporter](https://academy.avax.network/course/teleporter).
+
+## Environment Setup
 
 This starter kit will get you started with developing solidity smart contract dApps on the C-Chain and on an Avalanche Subnet. It includes:
 
