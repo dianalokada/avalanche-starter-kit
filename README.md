@@ -1,14 +1,16 @@
-# Cross-Chain dApp with Mock Verification
+# Cross-Chain BLS Signature Verification dApp
 
-This repository contains the implementation of creating a Cross-Chain dApp with verification using the Avalanche platform. We will set up a local Avalanche network, deploy a Subnet, and create a dApp on the local C-Chain that sends messages to the Subnet. The Subnet will verify the BLS signatures and send back the result to the C-Chain.
+This repository contains the implementation of creating a Cross-Chain BLS Signature Verification dApp using the Avalanche platform. We will set up a local Avalanche network, deploy a Subnet, and create a dApp on the local C-Chain that sends messages to the Subnet. The Subnet will verify the BLS signatures and send back the result to the C-Chain.
 
 ## Learn about Cross-Subnet dApps with Teleporter
 
 To get a better understanding of Cross-Subnet dApps architecture, take the Avalanche Academy course on [Cross-Subnet dApps with Teleporter](https://academy.avax.network/course/teleporter).
 
-## Goal
+### Goal
 
 Deploy a Subnet to a local network. The dApp on the local C-Chain needs to send a message containing some message, a BLS signature, and a BLS public key to your Subnet. The Subnet needs to verify the signature and send a message back to the C-Chain informing the result of the verification. 
+
+## Set Up
 
 This starter kit will get you started with developing solidity smart contract dApps on the C-Chain and on an Avalanche Subnet. It includes:
 
@@ -18,8 +20,6 @@ This starter kit will get you started with developing solidity smart contract dA
   - Cast: Interact with these smart contracts
 - **Teleporter**: All contracts you may want to interact with Teleporter
 - **AWM Relayer**: The binary to run your own relayer
-
-## Set Up
 
 This starter kit utilizes a Dev Container specification. Dev Containers use containerization to create consistent and isolated development environments. All of the above mentioned components are pre-installed in that container. These containers can be run using GitHub Codespaces or locally using Docker and VS Code. You can switch back and forth between the two options.
 
