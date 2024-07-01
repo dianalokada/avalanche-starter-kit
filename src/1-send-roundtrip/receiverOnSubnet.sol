@@ -52,7 +52,7 @@ contract ReceiverOnSubnet is ITeleporterReceiver {
         view
         returns (bool)
     {
-        // return true;
+        // return true ;
         return BLS_VERIFIER.verifyBLSSignature(_message, _signature, _publicKey);
     }
 }
