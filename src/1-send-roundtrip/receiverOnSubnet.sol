@@ -14,8 +14,8 @@ interface IBLSSignatureVerifier {
 contract ReceiverOnSubnet is ITeleporterReceiver {
     ITeleporterMessenger public immutable messenger = ITeleporterMessenger(0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf);
 
-    // IBLSSignatureVerifier private constant BLS_VERIFIER =
-    //     IBLSSignatureVerifier(0x0000000000000000000000000000000000000810); // Replace with the actual precompile address
+    IBLSSignatureVerifier private constant BLS_VERIFIER =
+        IBLSSignatureVerifier(0x0300000000000000000000000000000000000010); // The actual precompile address
 
     function receiveTeleporterMessage(bytes32 sourceBlockchainID, address originSenderAddress, bytes calldata message)
         external
@@ -52,7 +52,7 @@ contract ReceiverOnSubnet is ITeleporterReceiver {
         view
         returns (bool)
     {
-        return true;
-        // return BLS_VERIFIER.verifyBLSSignature(_message, _signature, _publicKey);
+        // return true;
+        return BLS_VERIFIER.verifyBLSSignature(_message, _signature, _publicKey);
     }
 }
